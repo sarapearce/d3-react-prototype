@@ -22,10 +22,8 @@ class App extends Component {
 
   createCircles() {
     const circle_selection = selectAll('circle').data(this.state.cities);
-    
-    this.setState({ 
-      circles: circle_selection
-    });
+
+    this.state.circles = circle_selection;
 
     // Set colors by the continent
     const color = {
@@ -33,17 +31,19 @@ class App extends Component {
       'North America': '#8da0cb',
       'Asia': '#fc8d62'
     };
-    circle_selection
+    this.state.circles
       .attr('r', function(d) {
         return this.scaleRadius(d.population);
       })
       .style('fill', function(d) {
         return color[d.continent];
       });
+
+    return this.state.circles;
   }
 
-  scaleRadius(population) { 
-    return ( 
+  scaleRadius(population) {
+    return (
       scaleSqrt(population).domain([0, 25000000]).range([0, 50])
     );
   }
@@ -57,6 +57,8 @@ class App extends Component {
           <circle cx="50" cy="50" r="40" stroke="black" strokeWidth="3" fill="red" />
         </svg>
       </div>
+      <React.Fragment>
+      </React.Fragment>
     );
   }
 }
